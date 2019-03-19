@@ -3,14 +3,17 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "yang.idvincent.ndk_template.app_native_activity"
+        applicationId "yang.idvincent.ndk_template.app_input_queue"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
         externalNativeBuild {
             cmake {
-                arguments "-DBUILD_NATIVE_ACTIVITY=TRUE"
+                arguments "-DBUILD_APP_INPUT_QUEUE=TRUE"
                 cppFlags "-std=c++11"
             }
         }
