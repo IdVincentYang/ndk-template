@@ -1,36 +1,13 @@
-apply plugin: 'com.android.application'
+apply from: "$project.rootDir/shared/build.gradle"
 
 android {
-    compileSdkVersion 28
     defaultConfig {
         applicationId "yang.idvincent.ndk_template.app_input_queue"
-        minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
         externalNativeBuild {
             cmake {
                 arguments "-DBUILD_APP_INPUT_QUEUE=TRUE"
-                cppFlags "-std=c++11"
             }
         }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path "../CMakeLists.txt"
-        }
-    }
-    lintOptions {
-        disable 'GoogleAppIndexingWarning'
     }
 }
 

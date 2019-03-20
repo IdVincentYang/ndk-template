@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "../CMakeLists.txt"
+        }
+    }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+    }
+    sourceSets {
+        main.res.srcDir('../shared/res')
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            //  select ABIs to build APKs for
+            include 'armeabi-v7a'
+            //  generate an additional APK that contains all the ABIs
+            universalApk true
+        }
+    }
+}
