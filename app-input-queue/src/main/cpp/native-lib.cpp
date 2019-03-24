@@ -7,9 +7,6 @@
 #define _LV(...)    PAL_LOG_V("app-input-queue", __VA_ARGS__)
 #define _LD(...)    PAL_LOG_D("app-input-queue", __VA_ARGS__)
 
-const int EVENT_TYPE_ID_INPUT = 0x11;
-const int EVENT_TYPE_ID_SENSOR_ACCELEROMETER = 0x12;
-
 static ASensorManager *_get_sensor_manager_instance(ANativeActivity *);
 
 class MyActivity : public NativeActivity {
@@ -36,8 +33,8 @@ public:
         };
 
         _accSensor = ASensorManager_getDefaultSensor(sensorManager, ASENSOR_TYPE_ACCELEROMETER);
-        _accQueue = ASensorManager_createEventQueue(sensorManager, looper,
-                                                    EVENT_TYPE_ID_SENSOR_ACCELEROMETER, cb, this);
+        _accQueue = ASensorManager_createEventQueue(sensorManager, looper, ALOOPER_POLL_CALLBACK,
+                                                    cb, this);
     }
 
     virtual void onDestroy() override {
@@ -87,7 +84,6 @@ public:
         NativeActivity::onInputQueueCreated(queue);
         ALooper *looper = ALooper_forThread();
         assert(looper != nullptr && _inputQueue == nullptr);
-//        ALooper_addFd(looper, )
 
         _inputQueue = queue;
         ALooper_callbackFunc cb = [](int fd, int events, void *data) -> int {
@@ -96,7 +92,7 @@ public:
             activity->onInputEventCallback();
             return 1;   // return 1 mean's continue receive callback
         };
-        AInputQueue_attachLooper(queue, looper, EVENT_TYPE_ID_INPUT, cb, this);
+        AInputQueue_attachLooper(queue, looper, ALOOPER_POLL_CALLBACK, cb, this);
     }
 
     virtual void onInputQueueDestroyed(AInputQueue *queue) override {
