@@ -2,7 +2,7 @@
 
 #include "pal-log.hxx"
 
-#define _LD(...)  PAL_LOG_D("native-lib", __VA_ARGS__)
+#define _LD(...)  PAL_LOG_D("native-activity", __VA_ARGS__)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //  local

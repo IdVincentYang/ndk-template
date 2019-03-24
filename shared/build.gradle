@@ -7,6 +7,9 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        ndk {
+            ldLibs "log", "android"
+        }
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11"
@@ -16,7 +19,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
     externalNativeBuild {
@@ -25,17 +28,17 @@ android {
         }
     }
     lintOptions {
-        disable 'GoogleAppIndexingWarning'
+        disable "GoogleAppIndexingWarning"
     }
     sourceSets {
-        main.res.srcDir('../shared/res')
+        main.res.srcDir("../shared/res")
     }
     splits {
         abi {
             enable true
             reset()
-            //  select ABIs to build APKs for
-            include 'armeabi-v7a'
+            //  select ABIs to build APKs for 'armeabi-v7a' 'x86'
+            include 'armeabi-v7a', 'x86'
             //  generate an additional APK that contains all the ABIs
             universalApk true
         }
